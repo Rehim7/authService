@@ -1,0 +1,30 @@
+
+spring:
+  application:
+    name: authService
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 52020278522
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+security:
+  jwt:
+    secret-key: "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970"
+    expiration: 3600000
+    refresh-token:
+      token-expiration: 604800000
+
+logging:
+  level:
+    root: INFO
+    com.example.authservice: DEBUG
+    org.springframework.web: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+server:
+  port: 8081
