@@ -37,8 +37,6 @@ public class AuthController {
 
     private final UserCredentialRepository repository;
 
-    // private final AuthenticationManager authenticationManager; // Removed
-    // private final PasswordEncoder passwordEncoder; // Removed
 
     public AuthController(AuthService authService, RefreshTokenService refreshTokenService, JwtService jwtService,
             UserCredentialRepository repository) {
