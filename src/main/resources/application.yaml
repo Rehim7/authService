@@ -3,7 +3,7 @@ spring:
   application:
     name: authService
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/hoteldb
     username: postgres
     password: 52020278522
   jpa:

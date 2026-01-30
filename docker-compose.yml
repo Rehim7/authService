@@ -1,0 +1,50 @@
+services:
+  # Verilənlər Bazası
+  postgres-db:
+    image: postgres:15
+    container_name: hotel-postgres
+    environment:
+      POSTGRES_DB: hoteldb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 52020278522
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Keşləmə
+  redis-cache:
+    image: redis:7-alpine
+    container_name: hotel-redis
+    ports:
+      - "6379:6379"
+
+  # 1. Hotel Reservation Sistemi (Port: 8080)
+  hotel-app:
+    build: ../HotelReservationSystem # Hotel qovluğuna yol
+    container_name: hotel-reservation-app
+    ports:
+      - "8080:8080"
+      - "9091:9091"
+    depends_on:
+      - postgres-db
+      - redis-cache
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://hotel-postgres:5432/hoteldb
+      SPRING_DATA_REDIS_HOST: hotel-redis
+
+  # 2. Auth Service (Port: 8081)
+  auth-service:
+    build: . # Auth qovluğundadırsa belə qalır
+    container_name: auth-service-app
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://hotel-postgres:5432/hoteldb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 52020278522
+
+volumes:
+  postgres_data:

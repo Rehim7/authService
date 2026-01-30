@@ -42,6 +42,10 @@ public class JwtService {
         userDetails.getAuthorities().stream()
                 .findFirst()
                 .ifPresent(authority -> extraClaims.put("role", authority.getAuthority()));
+        if (userDetails instanceof com.example.authservice.model.UserCredential user) {
+            extraClaims.put("userId", user.getId());
+        }
+
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
